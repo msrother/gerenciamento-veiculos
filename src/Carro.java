@@ -17,7 +17,7 @@ public class Carro extends Veiculo implements Promocao {
 
     @Override
     public String exibirDetalhes() {
-        return String.format("Carro - Placa: %s, Marca: %s, Modelo: %s, Ano: %d, Preço: R$%.2f, Portas: %d",
+        return String.format("|| CARRO | Placa: %s | Marca: %s | Modelo: %s | Ano: %d | Preço: R$ %.2f | Portas: %d ||",
         getPlaca(), getMarca(), getModelo(), getAno(), getPreco(), getQtdPortas());
     }
 

@@ -16,7 +16,7 @@ public class Moto extends Veiculo implements Promocao{
 
     @Override
     public String exibirDetalhes() {
-        return String.format("Moto - Placa: %s, Marca: %s, Modelo: %s, Ano: %d, Preço: R$%.2f, Tipo de freio: %s",
+        return String.format("|| MOTO | Placa: %s | Marca: %s | Modelo: %s | Ano: %d | Preço: R$ %.2f | Tipo de freio: %s ||",
                 getPlaca(), getMarca(), getModelo(), getAno(), getPreco(), getTipoFreio());
     }
 
