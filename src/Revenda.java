@@ -22,18 +22,18 @@ public class Revenda {
                 return;
             }
         }
-        System.out.println("Veículo não encontrado com a placa especificada.");
+        System.out.println("\n Veículo não encontrado com a placa especificada.");
     }
 
     public void exibirTodosDetalhesVeiculosRemovidos() {
         if (veiculosRemovidos.isEmpty()) {
-            System.out.println("Nenhum veículo foi removido até o momento.");
+            System.out.println("\n Nenhum veículo foi removido até o momento.");
+            return;
         } else {
-            System.out.println("Detalhes dos veículos removidos:");
             for (Map.Entry<String, Veiculo> entry : veiculosRemovidos.entrySet()) {
                 String placa = entry.getKey();
                 Veiculo veiculo = entry.getValue();
-                System.out.println("Placa: " + placa);
+               // System.out.println("Placa: " + placa);
                 System.out.println(veiculo.exibirDetalhes());
                 System.out.println("----------------------------------------");
             }
@@ -41,10 +41,14 @@ public class Revenda {
     }
 
     public void listarVeiculos() {
-        System.out.println("Lista de Veículos na Revenda:");
-        for (Veiculo veiculo : veiculos) {
-            System.out.println(veiculo.exibirDetalhes());
+        if (veiculos.isEmpty()) {
+            System.out.println("\n A revenda não possuí veículos cadastrados!");
+        } else {
+            for (Veiculo veiculo : veiculos) {
+                System.out.println(veiculo.exibirDetalhes());
+            }
         }
+
     }
 
     public void adicionarDesconto(String placa, double desconto) {
@@ -53,23 +57,23 @@ public class Revenda {
                 if (veiculo instanceof Promocao) {
                     Promocao veiculoComDesconto = (Promocao) veiculo;
                     double precoOriginal = veiculo.getPreco();
-
                     double precoComDesconto = veiculoComDesconto.aplicarDesconto(precoOriginal, desconto);
 
                     if (precoComDesconto == -1) {
-                        System.out.println("Desconto de " + desconto + "% excede o limite máximo permitido. O desconto não foi aplicado ao veículo com placa " + placa);
+                        System.out.println("\n Desconto de " + desconto + "% excede o limite máximo permitido. O desconto não foi aplicado ao veículo com placa " + placa);
                         return;
                     }
 
                     veiculo.setPreco(precoComDesconto);
                     System.out.println("Desconto de " + desconto + "% aplicado com sucesso ao veículo com placa " + placa);
                     return;
+
                 } else {
                     System.out.println("O veículo com placa " + placa + " não suporta desconto.");
                     return;
                 }
             }
         }
-        System.out.println("Veículo não encontrado com a placa especificada.");
+        System.out.println("\n==> Veículo não encontrado com a placa especificada.");
     }
 }

@@ -1,44 +1,96 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
-        // Instanciando alguns carros e motos
-        Carro carro1 = new Carro("ABC1234", "Ford", "Focus", 2017, 35000.0, 4);
-        Moto moto1 = new Moto("XYZ5678", "Honda", "CBR", 2021, 30000.0, "Disco");
-        Carro carro2 = new Carro("DEF5678", "Chevrolet", "Onix", 2023, 60000.0, 4);
-        Moto moto2 = new Moto("ETZ5612", "Yamaha", "R1", 2019, 57000,"ABS");
-
-        // Criando uma instância de Revenda
+        Scanner scanner = new Scanner(System.in);
         Revenda revenda = new Revenda();
 
-        revenda.adicionarVeiculo(carro1);
-        revenda.adicionarVeiculo(moto1);
-        revenda.adicionarVeiculo(carro2);
-        revenda.adicionarVeiculo(moto2);
+        int opcao;
+        do {
+            System.out.println("\n### REVENDA DE VEÍCULOS ###");
+            System.out.println("1. Adicionar Veículo");
+            System.out.println("2. Remover Veículo");
+            System.out.println("3. Listar Veículos");
+            System.out.println("4. Aplicar Desconto");
+            System.out.println("5. Listar Veículos Removidos");
+            System.out.println("6. Sair");
+            System.out.print("Escolha uma opção: ");
 
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("### Lista de Veículos antes do Desconto ###");
-        revenda.listarVeiculos();
+                switch (opcao) {
+                    case 1:
+                        System.out.println("Informe o tipo de veículo (CARRO/MOTO):");
+                        String tipoVeiculo = scanner.nextLine();
 
-        // Aplicando desconto em carros (máximo de 10%)
-        revenda.adicionarDesconto("ABC1234", 8);
+                        System.out.println("Informe a placa:");
+                        String placa = scanner.nextLine().toUpperCase();
 
-        // Aplicando desconto em motos (máximo de 5%)
-        revenda.adicionarDesconto("XYZ5678", 3);
+                        System.out.println("Informe a marca:");
+                        String marca = scanner.nextLine();
 
-        System.out.println("\n### Lista de Veículos após o Desconto ###");
-        revenda.listarVeiculos();
+                        System.out.println("Informe o modelo:");
+                        String modelo = scanner.nextLine();
 
+                        System.out.println("Informe o ano:");
+                        int ano = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("\n### Veículos removidos ####");
-        revenda.removerVeiculo("DEF5678");
-        revenda.removerVeiculo("ABC1234");
-        revenda.removerVeiculo("XYZ5678");
-        revenda.removerVeiculo("TTB3423"); //teste com placa não cadastrada
+                        System.out.println("Informe o preço:");
+                        double preco = Double.parseDouble(scanner.nextLine());
 
-        revenda.exibirTodosDetalhesVeiculosRemovidos();
+                        if ("Carro".equalsIgnoreCase(tipoVeiculo)) {
+                            System.out.println("Informe o número de portas:");
+                            int numeroPortas = Integer.parseInt(scanner.nextLine());
 
+                            Carro novoCarro = new Carro(placa, marca, modelo, ano, preco, numeroPortas);
+                            revenda.adicionarVeiculo(novoCarro);
+                        } else if ("Moto".equalsIgnoreCase(tipoVeiculo)) {
+                            System.out.println("Informe o tipo de freio:");
+                            String tipoFreio = scanner.nextLine();
 
+                            Moto novaMoto = new Moto(placa, marca, modelo, ano, preco, tipoFreio);
+                            revenda.adicionarVeiculo(novaMoto);
+                        } else {
+                            System.out.println("\n Tipo de veículo não reconhecido. Tente novamente.");
+                        }
+                        break;
+                    case 2:
+                        System.out.print("Digite a placa do veículo que deseja remover: ");
+                        String placaRemover = scanner.nextLine().toUpperCase();
+                        revenda.removerVeiculo(placaRemover);
+                        break;
+                    case 3:
+                        System.out.println("\n### Lista de Veículos ###");
+                        revenda.listarVeiculos();
+                        break;
+                    case 4:
+                        System.out.print("Digite a placa do veículo para aplicar desconto: ");
+                        String placaDesconto = scanner.nextLine().toUpperCase();
+                        System.out.print("Digite o percentual de desconto: ");
+                        double percentual = Double.parseDouble(scanner.nextLine());
+                        revenda.adicionarDesconto(placaDesconto, percentual);
+                        break;
+                    case 5:
+                        System.out.println("\n### Lista de Veículos Removidos ###");
+                        revenda.exibirTodosDetalhesVeiculosRemovidos();
+                        break;
+                    case 6:
+                        System.out.println("\n Encerrando o programa...");
+                        break;
+                    default:
+                        System.out.println("\n Opção inválida. Tente novamente.");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\n Erro: Por favor, insira apenas números válidos para a opção.");
+                opcao = 0;
 
+            }
+        } while (opcao != 6);
+
+        scanner.close();
 
     }
 
